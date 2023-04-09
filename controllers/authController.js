@@ -68,7 +68,7 @@ const updateUser = async (req, res) => {
 
   res
     .status(StatusCodes.OK)
-    .json({ user: userExists, location: userExists.locations });
+    .json({ user: userExists, location: userExists.location });
 };
 
 const getCurrentUser = async (req, res) => {
@@ -85,4 +85,4 @@ const logout = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'User logged out!' });
 };
 
-export { register, login, updatedUser, getCurrentUser, logout };
+export { register, login, updateUser, getCurrentUser, logout };
