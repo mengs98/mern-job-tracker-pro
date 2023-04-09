@@ -31,7 +31,6 @@ const JobSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      default: 'Bali, Indonesia',
       required: [true, 'Please state the job location'],
       minlength: [2, 'Position must be at least 2 characters'],
       maxlength: [20, 'Position must not exceed 20 characters'],

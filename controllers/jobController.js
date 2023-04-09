@@ -1,11 +1,8 @@
 import Job from '../models/Job.js';
 import mongoose from 'mongoose';
 import moment from 'moment';
-import {
-  BadRequestError,
-  NotFoundError,
-} from '../errors/index.js';
-import { checkPermissions } from '../utils/checkPermissions.js';
+import { BadRequestError, NotFoundError } from '../errors/index.js';
+import { checkPermissions } from '../utils/index.js';
 import { StatusCodes } from 'http-status-codes';
 
 const createJob = async (req, res) => {
@@ -90,16 +87,16 @@ const deleteJob = async (req, res) => {
   const jobExists = await Job.findOne({ _id: jobId });
   if (!jobExists) throw new NotFoundError(`No job with id ${jobId}`);
 
-  checkPermissions(req.userId, jobExists.createdBy);
+  checkPermissions(req.user, jobExists.createdBy);
 
   await jobExists.deleteOne();
 
-  res.status(StatusCodes.Ok).json({ msg: 'Success! Job removed!' });
+  res.status(StatusCodes.OK).json({ msg: 'Success! Job removed!' });
 };
 
 const showStats = async (req, res) => {
   let stats = await Job.aggregate([
-    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     { $group: { _id: '$status', count: { $sum: 1 } } },
   ]);
 
@@ -118,7 +115,7 @@ const showStats = async (req, res) => {
   };
 
   let monthlyApplications = await Job.aggregate([
-    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     {
       $group: {
         _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },

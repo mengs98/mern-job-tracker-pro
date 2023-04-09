@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
   location: {
     type: String,
     trim: true,
-    default: 'Bali, Indonesia',
+    default: 'bali',
     required: [true, 'Please specify your location'],
     minlength: [2, 'Position must be at least 2 characters'],
     maxlength: [20, 'Position must not exceed 20 characters'],
