@@ -46,7 +46,6 @@ const JobSchema = new mongoose.Schema(
         },
         message: 'Deadline must be within 6 months from today',
       },
-      required: [true, 'Please state the deadline'],
     },
     link: {
       type: String,
@@ -65,7 +64,7 @@ const JobSchema = new mongoose.Schema(
     },
     skills: {
       type: String,
-      required: [true, 'Please state the skills that needed for this position'],
+      required: [true, 'Please list required skills, comma-separated'],
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
